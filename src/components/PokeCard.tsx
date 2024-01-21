@@ -1,6 +1,7 @@
 const PokeCard = ({ pokemon }) => {
   return (
-    <div className="border border-grey-500 w-[200px] p-3 m-3 rounded-lg transition duration-500 hover:scale-105 flex justify-center flex-col items-center">
+    <div className="border border-grey-500 w-[200px] p-3 m-3 rounded-lg transition duration-500 hover:scale-105 flex justify-center flex-col items-center relative">
+      <p className="rounded-full bg-blue-800 flex justify-center items-center text-white absolute right-1 top-1 px-2">{pokemon.id}</p>
       <h3 className="text-lg font-bold">
         {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
       </h3>
