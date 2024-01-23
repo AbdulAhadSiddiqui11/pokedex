@@ -5,10 +5,12 @@ import PokeLayout from "./components/PokeLayout";
 import FetchBox from "./components/FetchBox";
 
 function App() {
-  const [lastPokeIdx, setLastPokeIdx] = useState(Math.floor(Math.random() * 30) + 1);
+  const [lastPokeIdx, setLastPokeIdx] = useState<number>(Math.floor(Math.random() * 30) + 1);
+  const [firstPokeIdx, setFirstPokeIdx] = useState<number>(1);
 
-  const handleSetLastPokeIdx = (newLastPokeIdx) => {
+  const handleSubmit = (newFirstPokeIdx, newLastPokeIdx) => {
     setLastPokeIdx(newLastPokeIdx);
+    setFirstPokeIdx(newFirstPokeIdx);
   };
 
   return (
@@ -16,8 +18,8 @@ function App() {
       <Header />
       {/* <PokeCard pokemon={pokemon}/> */}
       {/* <ShimmerCard /> */}
-      <FetchBox setLast={handleSetLastPokeIdx} lastIdx={lastPokeIdx} />
-      <PokeLayout endIdx={lastPokeIdx} />
+      <FetchBox handleSubmit={handleSubmit} />
+      <PokeLayout firstIdx={firstPokeIdx} endIdx={lastPokeIdx} />
       <Footer />
     </>
   );

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PokeCard from "./PokeCard";
 import ShimmerCard from "./ShimmerCard";
 
-const PokeLayout = ({ endIdx }) => {
+const PokeLayout = ({ firstIdx, endIdx }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [pokemons, setPokemons] = useState<any>([]);
   const [filteredPokemon, setFilteredPokemon] = useState([]);
@@ -11,16 +11,21 @@ const PokeLayout = ({ endIdx }) => {
   const pokemonPerPage: number = Math.min(30, endIdx);
 
   function generateUrls(start: number, end: number) {
+    console.log("in: ", start, " ", end);
     const baseUrl = "https://pokeapi.co/api/v2/pokemon";
     const urls = [];
+    console.log(start <= end);
     for (let i = start; i <= end; i++) {
+      console.log("innnnn");
       urls.push(`${baseUrl}/${i}`);
     }
+    console.log(urls);
     return urls;
   }
 
   const fetchPokemon = async () => {
-    const urls = generateUrls(1, endIdx);
+    const urls = generateUrls(firstIdx, endIdx);
+    console.log(firstIdx, endIdx, urls);
     try {
       console.log("Fetching again!" + (Math.random() % 23));
       const pokePromises = urls.map((url) => fetch(url));
@@ -45,14 +50,13 @@ const PokeLayout = ({ endIdx }) => {
   useEffect(() => {
     fetchPokemon();
     // fetchPokemonDebounce();
-  }, [endIdx]);
+  }, [firstIdx, endIdx]);
 
   useEffect(() => {
     const startIdx = (pageNumber - 1) * pokemonPerPage;
     const pageEndIdx = startIdx + pokemonPerPage;
     setFilteredPokemon(pokemons.slice(startIdx, pageEndIdx));
   }, [pageNumber, pokemons]);
-
 
   return (
     <>
