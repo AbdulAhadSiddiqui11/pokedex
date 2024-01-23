@@ -2,7 +2,7 @@ import { useState } from "react";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import PokeLayout from "./components/PokeLayout";
-import Search from "./components/Search";
+import FetchBox from "./components/FetchBox";
 
 function App() {
   const [lastPokeIdx, setLastPokeIdx] = useState(Math.floor(Math.random() * 30) + 1);
@@ -16,7 +16,7 @@ function App() {
       <Header />
       {/* <PokeCard pokemon={pokemon}/> */}
       {/* <ShimmerCard /> */}
-      <Search setLast={handleSetLastPokeIdx} lastIdx={lastPokeIdx} />
+      <FetchBox setLast={handleSetLastPokeIdx} lastIdx={lastPokeIdx} />
       <PokeLayout endIdx={lastPokeIdx} />
       <Footer />
     </>
