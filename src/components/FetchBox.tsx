@@ -16,7 +16,7 @@ const FetchBox = ({ handleSubmit }) => {
       />
       <input
         type="number"
-        className="border border-gray-600 w-46 h-12 px-5 mx-2rounded-lg"
+        className="border border-gray-600 w-46 h-12 px-5 mx-2 rounded-lg"
         value={lastIdx || ""}
         onChange={(e) => setLastIdx(Number(e.target.value))}
         placeholder="Last Pokemon ID?"
