@@ -35,7 +35,6 @@ const PokeLayout = ({ endIdx }) => {
     }
   };
 
-
   const handleNext = () => {
     setPageNumber((page) => page + 1);
   };
@@ -50,9 +49,10 @@ const PokeLayout = ({ endIdx }) => {
 
   useEffect(() => {
     const startIdx = (pageNumber - 1) * pokemonPerPage;
-    const endIdx = startIdx + pokemonPerPage;
-    setFilteredPokemon(pokemons.slice(startIdx, endIdx));
+    const pageEndIdx = startIdx + pokemonPerPage;
+    setFilteredPokemon(pokemons.slice(startIdx, pageEndIdx));
   }, [pageNumber, pokemons]);
+
 
   return (
     <>
@@ -69,16 +69,29 @@ const PokeLayout = ({ endIdx }) => {
       </div>
       <div className="flex justify-between">
         <button
-          className="bg-blue-900 text-white p-3 m-2 rounded-lg hover:bg-blue-950"
+          className={
+            "bg-blue-900 text-white p-3 m-2 rounded-lg hover:bg-blue-950"
+          }
           onClick={handlePrevious}
-          disabled={loading || pageNumber == 1}
+          style={{ visibility: pageNumber === 1 ? "hidden" : "visible" }}
+          disabled={loading || pageNumber === 1}
         >
           Previous
         </button>
         <button
-          className="bg-blue-900 text-white p-3 m-2 rounded-lg hover:bg-blue-950"
+          className={
+            "bg-blue-900 text-white p-3 m-2 rounded-lg hover:bg-blue-950"
+          }
           onClick={handleNext}
-          disabled={loading || pageNumber == Math.ceil(endIdx / pokemonPerPage)}
+          style={{
+            visibility:
+              pageNumber === Math.ceil(endIdx / pokemonPerPage)
+                ? "hidden"
+                : "visible",
+          }}
+          disabled={
+            loading || pageNumber === Math.ceil(endIdx / pokemonPerPage)
+          }
         >
           Next
         </button>
