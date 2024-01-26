@@ -17,11 +17,11 @@ const Pagination: FC<IPaginationProps> = ({
   }
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center flex-wrap justify-between">
       {pageNumbers.map((idx) => (
         <button
           className={
-            "bg-blue-900 text-white px-5 py-2 mr-1 rounded-lg hover:bg-blue-950"
+            "bg-blue-900 text-white px-5 py-2 mr-1 my-2 rounded-lg hover:bg-blue-950"
           }
           onClick={() => setPageNumber(idx)}
           key={idx}

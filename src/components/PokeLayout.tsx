@@ -41,8 +41,15 @@ const PokeLayout: FC<IpokeLayoutProps> = ({ firstIdx, endIdx }) => {
     }
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth', // Add smooth scrolling behavior
+    });
+  };
   const updatePageNumber = (page: number): void => {
     setPageNumber(page);
+    scrollToTop();
   };
 
   useEffect(() => {
@@ -67,7 +74,7 @@ const PokeLayout: FC<IpokeLayoutProps> = ({ firstIdx, endIdx }) => {
               <PokeCard key={pokemon.id} pokemon={pokemon} />
             ))}
       </div>
-      <div className='flex justify-end p-2'>
+      <div className="flex justify-end p-2">
         <Pagination
           totalPokemon={pokemons.length}
           pokemonPerPage={pokemonPerPage}
