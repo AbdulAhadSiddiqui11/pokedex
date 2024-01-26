@@ -1,4 +1,6 @@
-const Header = () => {
+import { FC } from "react";
+
+const Header: FC = () => {
   return (
     <div className="w-full text-white bg-blue-900 font-bold text-2xl flex justify-center p-3">
       <h1>Welcome to PokeDex</h1>

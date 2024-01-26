@@ -1,14 +1,23 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import PokeLayout from "./components/PokeLayout";
 import FetchBox from "./components/FetchBox";
 
-function App() {
-  const [lastPokeIdx, setLastPokeIdx] = useState<number>(Math.floor(Math.random() * 30) + 1);
+const App: FC = () => {
+  const [lastPokeIdx, setLastPokeIdx] = useState<number>(
+    Math.floor(Math.random() * 30) + 1
+  );
   const [firstPokeIdx, setFirstPokeIdx] = useState<number>(1);
 
-  const handleSubmit = (newFirstPokeIdx, newLastPokeIdx) => {
+  const handleSubmit = (
+    newFirstPokeIdx: number,
+    newLastPokeIdx: number
+  ): void => {
+    if (newLastPokeIdx < newFirstPokeIdx) {
+      alert("Last Pokemon ID must be greater than first Pokemon ID!");
+      return;
+    }
     setLastPokeIdx(newLastPokeIdx);
     setFirstPokeIdx(newFirstPokeIdx);
   };
@@ -23,6 +32,6 @@ function App() {
       <Footer />
     </>
   );
-}
+};
 
 export default App;

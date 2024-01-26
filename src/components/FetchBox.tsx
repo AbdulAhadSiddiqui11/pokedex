@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 
-const FetchBox = ({ handleSubmit }) => {
+interface IFetchBoxProps {
+  handleSubmit: (newFirstPokeIdx: number, newLastPokeIdx: number) => void;
+}
+
+const FetchBox: FC<IFetchBoxProps> = ({ handleSubmit }) => {
   const [firstIdx, setFirstIdx] = useState<number>(0);
   const [lastIdx, setLastIdx] = useState<number>(0);
 
