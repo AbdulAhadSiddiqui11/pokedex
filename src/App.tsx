@@ -18,6 +18,12 @@ const App: FC = () => {
       alert("Last Pokemon ID must be greater than first Pokemon ID!");
       return;
     }
+
+    if (newLastPokeIdx === 0 || newFirstPokeIdx === 0) {
+      alert("Pokemon ID must be greater than 0!");
+      return;
+    }
+
     setLastPokeIdx(newLastPokeIdx);
     setFirstPokeIdx(newFirstPokeIdx);
   };
