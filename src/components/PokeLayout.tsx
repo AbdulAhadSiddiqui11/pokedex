@@ -26,6 +26,7 @@ const PokeLayout: FC<IpokeLayoutProps> = ({ firstIdx, endIdx }) => {
   }
 
   const fetchPokemon = async (): Promise<void> => {
+    setLoading(true);
     const urls = generateUrls(firstIdx, endIdx);
     try {
       console.log("Fetching again!" + (Math.random() % 23));
