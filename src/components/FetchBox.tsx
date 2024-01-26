@@ -1,4 +1,4 @@
-import { FC, useState, useRef } from "react";
+import { FC, useState, useRef, useEffect } from "react";
 
 interface IFetchBoxProps {
   handleSubmit: (newFirstPokeIdx: number, newLastPokeIdx: number) => void;
@@ -9,7 +9,10 @@ const FetchBox: FC<IFetchBoxProps> = ({ handleSubmit }) => {
   const [lastIdx, setLastIdx] = useState<number>(0);
 
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const firstIdxRef = useRef<HTMLInputElement>(null);
   const secondIdxRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => firstIdxRef.current?.focus(), []);
 
   return (
     <div className="p-3 flex justify-center items-center flex-wrap">
@@ -19,9 +22,12 @@ const FetchBox: FC<IFetchBoxProps> = ({ handleSubmit }) => {
         value={firstIdx || ""}
         onChange={(e) => setFirstIdx(Number(e.target.value))}
         onBlur={() => secondIdxRef.current?.focus()}
-        onKeyDown={(e) => { if(e.key === 'Enter') secondIdxRef.current?.focus() }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") secondIdxRef.current?.focus();
+        }}
         placeholder="First Pokemon ID?"
         pattern="[0-9]*"
+        ref={firstIdxRef}
       />
       <input
         type="number"
@@ -29,7 +35,9 @@ const FetchBox: FC<IFetchBoxProps> = ({ handleSubmit }) => {
         value={lastIdx || ""}
         onChange={(e) => setLastIdx(Number(e.target.value))}
         onBlur={() => buttonRef.current?.focus()}
-        onKeyDown={(e) => {if(e.key === 'Enter') handleSubmit(firstIdx, lastIdx)}}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") handleSubmit(firstIdx, lastIdx);
+        }}
         placeholder="Last Pokemon ID?"
         pattern="[0-9]*"
         ref={secondIdxRef}
