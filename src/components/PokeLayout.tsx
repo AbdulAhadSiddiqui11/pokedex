@@ -1,6 +1,7 @@
 import { FC, Key, useEffect, useState } from "react";
 import PokeCard from "./PokeCard";
 import ShimmerCard from "./ShimmerCard";
+import Pagination from "./Pagination";
 
 interface IpokeLayoutProps {
   firstIdx: number;
@@ -11,8 +12,6 @@ const PokeLayout: FC<IpokeLayoutProps> = ({ firstIdx, endIdx }) => {
   const [loading, setLoading] = useState<boolean>(true);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [pokemons, setPokemons] = useState<any>([]);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [filteredPokemon, setFilteredPokemon] = useState<any>([]);
   const [pageNumber, setPageNumber] = useState<number>(1);
 
   const pokemonPerPage: number = Math.min(30, endIdx);
@@ -42,24 +41,18 @@ const PokeLayout: FC<IpokeLayoutProps> = ({ firstIdx, endIdx }) => {
     }
   };
 
-  const handleNext = () => {
-    setPageNumber((page) => page + 1);
-  };
-  const handlePrevious = () => {
-    setPageNumber((page) => (page == 1 ? 1 : page - 1));
+  const updatePageNumber = (page: number): void => {
+    setPageNumber(page);
   };
 
   useEffect(() => {
     fetchPokemon();
-    // fetchPokemonDebounce();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firstIdx, endIdx]);
 
-  useEffect(() => {
-    const startIdx = (pageNumber - 1) * pokemonPerPage;
-    const pageEndIdx = startIdx + pokemonPerPage;
-    setFilteredPokemon(pokemons.slice(startIdx, pageEndIdx));
-  }, [pageNumber, pokemons, pokemonPerPage]);
+  const lastPokemon = pageNumber * pokemonPerPage;
+  const firstPokemon = lastPokemon - pokemonPerPage;
+  const filteredPokemon = pokemons.slice(firstPokemon, lastPokemon);
 
   return (
     <>
@@ -70,38 +63,16 @@ const PokeLayout: FC<IpokeLayoutProps> = ({ firstIdx, endIdx }) => {
               <ShimmerCard key={index} />
             ))
           : // Display actual Pokemon cards when data is loaded
-            filteredPokemon.map((pokemon: { id: Key | null | undefined; }) => (
+            filteredPokemon.map((pokemon: { id: Key | null | undefined }) => (
               <PokeCard key={pokemon.id} pokemon={pokemon} />
             ))}
       </div>
-      <div className="flex justify-between">
-        <button
-          className={
-            "bg-blue-900 text-white p-3 m-2 rounded-lg hover:bg-blue-950"
-          }
-          onClick={handlePrevious}
-          style={{ visibility: pageNumber === 1 ? "hidden" : "visible" }}
-          disabled={loading || pageNumber === 1}
-        >
-          Previous
-        </button>
-        <button
-          className={
-            "bg-blue-900 text-white p-3 m-2 rounded-lg hover:bg-blue-950"
-          }
-          onClick={handleNext}
-          style={{
-            visibility:
-              pageNumber === Math.ceil(endIdx / pokemonPerPage)
-                ? "hidden"
-                : "visible",
-          }}
-          disabled={
-            loading || pageNumber === Math.ceil(endIdx / pokemonPerPage)
-          }
-        >
-          Next
-        </button>
+      <div className='flex justify-end p-2'>
+        <Pagination
+          totalPokemon={pokemons.length}
+          pokemonPerPage={pokemonPerPage}
+          setPageNumber={updatePageNumber}
+        />
       </div>
     </>
   );
