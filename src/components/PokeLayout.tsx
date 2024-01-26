@@ -52,6 +52,7 @@ const PokeLayout: FC<IpokeLayoutProps> = ({ firstIdx, endIdx }) => {
   useEffect(() => {
     fetchPokemon();
     // fetchPokemonDebounce();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firstIdx, endIdx]);
 
   useEffect(() => {
